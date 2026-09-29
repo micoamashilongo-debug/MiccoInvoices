@@ -4,7 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MiccoInvoices - FENINI Tradic CC</title>
+
+<title>MiccoInvoices - FENINI Trading CC</title>
 
 <style>
 * {
@@ -65,7 +66,8 @@ label {
     margin-bottom: 6px;
 }
 
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: 11px;
     border: 1px solid #ccc;
@@ -104,7 +106,8 @@ table {
     margin-top: 15px;
 }
 
-th, td {
+th,
+td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
     text-align: left;
@@ -167,6 +170,7 @@ th {
 }
 
 @media (max-width: 700px) {
+
     .grid {
         grid-template-columns: 1fr;
     }
@@ -186,6 +190,7 @@ th {
 }
 
 @media print {
+
     body {
         background: white;
     }
@@ -204,7 +209,8 @@ th {
         display: none !important;
     }
 
-    input, textarea {
+    input,
+    textarea {
         border: none;
         padding: 0;
     }
@@ -219,8 +225,11 @@ th {
 <body>
 
 <div class="header">
+
     <h1>MiccoInvoices</h1>
+
     <p>Simple. Professional. Easy invoicing.</p>
+
 </div>
 
 <div class="container">
@@ -234,23 +243,29 @@ th {
         <div class="grid">
 
             <div>
+
                 <label>Business Name</label>
+
                 <input
                     type="text"
                     id="businessName"
-                    value="FENINI Tradic CC"
+                    value="FENINI Trading CC"
                     placeholder="Your business name"
                 >
+
             </div>
 
             <div>
+
                 <label>Phone</label>
+
                 <input
                     type="text"
                     id="businessPhone"
                     value="+264 81 249 5624"
                     placeholder="Business phone"
                 >
+
             </div>
 
         </div>
@@ -301,211 +316,18 @@ th {
         <div class="grid">
 
             <div>
+
                 <label>Invoice Number</label>
+
                 <input
                     type="text"
                     id="invoiceNumber"
                     value="INV-001"
                 >
+
             </div>
 
             <div>
-                <label>Invoice Date</label>
-                <input
-                    type="date"
-                    id="invoiceDate"
-                >
-            </div>
 
-        </div>
-
-        <br>
-
-        <label>Due Date</label>
-
-        <input
-            type="date"
-            id="dueDate"
-        >
-
-    </div>
-
-
-    <!-- CUSTOMER -->
-
-    <div class="section">
-
-        <h2>Customer</h2>
-
-        <label>Customer Name</label>
-
-        <input
-            type="text"
-            id="customerName"
-            placeholder="Customer name"
-        >
-
-        <br><br>
-
-        <label>Customer Address</label>
-
-        <textarea
-            id="customerAddress"
-            placeholder="Customer address"
-        ></textarea>
-
-    </div>
-
-
-    <!-- ITEMS -->
-
-    <div class="section">
-
-        <h2>Items / Services</h2>
-
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Price (N$)</th>
-                    <th>Total (N$)</th>
-                    <th class="no-print">Action</th>
-                </tr>
-
-            </thead>
-
-            <tbody id="items"></tbody>
-
-        </table>
-
-        <button
-            class="add-btn no-print"
-            onclick="addItem()"
-        >
-            + Add Item
-        </button>
-
-    </div>
-
-
-    <!-- TOTALS -->
-
-    <div class="summary">
-
-        <div>
-            <span>Subtotal</span>
-            <span>
-                N$ <span id="subtotal">0.00</span>
-            </span>
-        </div>
-
-        <div>
-            <span>VAT (%)</span>
-
-            <input
-                type="number"
-                id="vatRate"
-                value="0"
-                min="0"
-                style="width:80px"
-                oninput="calculateTotal()"
-            >
-        </div>
-
-        <div>
-            <span>VAT</span>
-
-            <span>
-                N$ <span id="vatAmount">0.00</span>
-            </span>
-        </div>
-
-        <div class="grand-total">
-
-            <span>Total</span>
-
-            <span>
-                N$ <span id="grandTotal">0.00</span>
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- ACTIONS -->
-
-    <div class="actions no-print">
-
-        <button
-            class="print-btn"
-            onclick="window.print()"
-        >
-            Print / Save PDF
-        </button>
-
-        <button
-            class="clear-btn"
-            onclick="clearInvoice()"
-        >
-            New Invoice
-        </button>
-
-    </div>
-
-</div>
-
-
-<script>
-
-/* Set today's date */
-
-document.getElementById("invoiceDate").valueAsDate = new Date();
-
-
-/* Load saved business information */
-
-function loadBusinessInfo() {
-
-    const savedBusiness =
-        localStorage.getItem("miccoBusinessInfo");
-
-    if (!savedBusiness) {
-        return;
-    }
-
-    const business =
-        JSON.parse(savedBusiness);
-
-    document.getElementById("businessName").value =
-        business.name || "";
-
-    document.getElementById("businessPhone").value =
-        business.phone || "";
-
-    document.getElementById("businessAddress").value =
-        business.address || "";
-
-    document.getElementById("businessReg").value =
-        business.reg || "";
-}
-
-
-/* Save business information */
-
-function saveBusinessInfo() {
-
-    const business = {
-
-        name:
-            document.getElementById("businessName").value,
-
-        phone:
-            document.getElementById("businessPhone").value,
-
-        address:
-            document.getElementById(
+                <label>Invoi
 ```
