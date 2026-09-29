@@ -8,27 +8,28 @@
 <title>MiccoInvoices - FENINI Trading CC</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef1f5;
     color: #222;
 }
 
 .header {
     background: #111827;
     color: white;
-    padding: 25px;
     text-align: center;
+    padding: 25px 15px;
 }
 
 .header h1 {
     margin: 0;
-    font-size: 32px;
+    font-size: 34px;
 }
 
 .header p {
@@ -37,7 +38,8 @@ body {
 }
 
 .container {
-    max-width: 1000px;
+    width: 95%;
+    max-width: 1050px;
     margin: 30px auto;
     background: white;
     padding: 30px;
@@ -46,12 +48,14 @@ body {
 }
 
 .section {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .section h2 {
-    border-bottom: 2px solid #eee;
+    margin-bottom: 18px;
     padding-bottom: 10px;
+    border-bottom: 2px solid #e5e7eb;
+    color: #111827;
 }
 
 .grid {
@@ -63,20 +67,22 @@ body {
 label {
     display: block;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 7px;
 }
 
 input,
 textarea {
     width: 100%;
     padding: 11px;
-    border: 1px solid #ccc;
+    border: 1px solid #cbd5e1;
     border-radius: 6px;
     font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 textarea {
     min-height: 80px;
+    resize: vertical;
 }
 
 button {
@@ -85,6 +91,11 @@ button {
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: 0.9;
 }
 
 .save-business {
@@ -94,10 +105,16 @@ button {
 }
 
 .success-message {
+    display: none;
     color: #15803d;
     font-weight: bold;
     margin-top: 10px;
-    display: none;
+}
+
+.invoice-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 table {
@@ -109,16 +126,27 @@ table {
 th,
 td {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd;
     text-align: left;
+    vertical-align: middle;
 }
 
 th {
     background: #f3f4f6;
+    font-weight: bold;
 }
 
-.item-input {
-    width: 100%;
+.quantity {
+    width: 90px;
+}
+
+.price {
+    width: 130px;
+}
+
+.line-total {
+    font-weight: bold;
+    white-space: nowrap;
 }
 
 .add-btn {
@@ -130,32 +158,38 @@ th {
 .remove-btn {
     background: #dc2626;
     color: white;
+    padding: 8px 12px;
 }
 
 .summary {
-    max-width: 350px;
+    width: 360px;
+    max-width: 100%;
     margin-left: auto;
     margin-top: 25px;
 }
 
-.summary div {
+.summary-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px;
+    padding: 9px 0;
+}
+
+.summary-row input {
+    width: 90px;
 }
 
 .grand-total {
+    border-top: 2px solid #111827;
+    margin-top: 10px;
+    padding-top: 14px;
     font-size: 22px;
     font-weight: bold;
-    border-top: 2px solid #222;
-    margin-top: 8px;
-    padding-top: 12px !important;
 }
 
 .actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin-top: 30px;
 }
 
@@ -164,28 +198,80 @@ th {
     color: white;
 }
 
-.clear-btn {
+.new-btn {
     background: #6b7280;
     color: white;
 }
 
-@media (max-width: 700px) {
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 25px;
+}
+
+.business-display {
+    flex: 1;
+}
+
+.business-display h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+}
+
+.invoice-title {
+    text-align: right;
+}
+
+.invoice-title h2 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.invoice-title p {
+    margin: 6px 0;
+}
+
+@media (max-width: 750px) {
 
     .grid {
         grid-template-columns: 1fr;
     }
 
+    .invoice-header {
+        flex-direction: column;
+    }
+
+    .invoice-title {
+        text-align: left;
+    }
+
     .container {
-        margin: 10px;
+        width: 98%;
         padding: 18px;
+        margin: 10px auto;
     }
 
     table {
         font-size: 13px;
     }
 
+    th,
+    td {
+        padding: 7px;
+    }
+
+    .quantity,
+    .price {
+        width: 100%;
+    }
+
     .actions {
         flex-direction: column;
+    }
+
+    .actions button {
+        width: 100%;
     }
 }
 
@@ -196,13 +282,16 @@ th {
     }
 
     .header {
-        background: white;
-        color: black;
+        display: none;
     }
 
     .container {
-        box-shadow: none;
+        width: 100%;
+        max-width: none;
         margin: 0;
+        padding: 10px;
+        box-shadow: none;
+        border-radius: 0;
     }
 
     .no-print {
@@ -213,16 +302,34 @@ th {
     textarea {
         border: none;
         padding: 0;
+        resize: none;
     }
 
     .section h2 {
         border-bottom: 1px solid #222;
     }
+
+    .invoice-box {
+        border: none;
+        padding: 0;
+    }
+
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
 }
+
 </style>
 </head>
 
 <body>
+
+<!-- WEBSITE HEADER -->
 
 <div class="header">
 
@@ -232,79 +339,144 @@ th {
 
 </div>
 
+
 <div class="container">
 
-    <!-- BUSINESS INFORMATION -->
 
-    <div class="section">
+<!-- BUSINESS INFORMATION -->
 
-        <h2>Your Business</h2>
+<div class="section no-print">
 
-        <div class="grid">
+    <h2>Your Business</h2>
 
-            <div>
+    <div class="grid">
 
-                <label>Business Name</label>
+        <div>
 
-                <input
-                    type="text"
-                    id="businessName"
-                    value="FENINI Trading CC"
-                    placeholder="Your business name"
-                >
+            <label>Business Name</label>
 
-            </div>
-
-            <div>
-
-                <label>Phone</label>
-
-                <input
-                    type="text"
-                    id="businessPhone"
-                    value="+264 81 249 5624"
-                    placeholder="Business phone"
-                >
-
-            </div>
+            <input
+                type="text"
+                id="businessName"
+                value="FENINI Trading CC"
+            >
 
         </div>
 
-        <br>
 
-        <label>Business Address</label>
+        <div>
 
-        <textarea
-            id="businessAddress"
-            placeholder="Business address"
-        >P.O. Box 703, Outapi, Ombalanu, Namibia</textarea>
+            <label>Phone</label>
 
-        <br>
+            <input
+                type="text"
+                id="businessPhone"
+                value="+264 81 249 5624"
+            >
 
-        <label>Registration Number</label>
-
-        <input
-            type="text"
-            id="businessReg"
-            value="CC/2014/013753"
-            placeholder="Registration number"
-        >
-
-        <button
-            class="save-business no-print"
-            onclick="saveBusinessInfo()"
-        >
-            Save Business Information
-        </button>
-
-        <div
-            id="saveMessage"
-            class="success-message no-print"
-        >
-            Business information saved.
         </div>
 
     </div>
+
+
+    <br>
+
+
+    <label>Business Address</label>
+
+    <textarea id="businessAddress">P.O. Box 703, Outapi, Ombalanu, Namibia</textarea>
+
+
+    <br>
+
+
+    <label>Registration Number</label>
+
+    <input
+        type="text"
+        id="businessReg"
+        value="CC/2014/013753"
+    >
+
+
+    <button
+        class="save-business"
+        onclick="saveBusinessInfo()"
+    >
+        Save Business Information
+    </button>
+
+
+    <div
+        id="saveMessage"
+        class="success-message"
+    >
+        Business information saved successfully.
+    </div>
+
+</div>
+
+
+
+<!-- INVOICE -->
+
+<div class="invoice-box">
+
+
+    <!-- INVOICE HEADER -->
+
+    <div class="invoice-header">
+
+
+        <div class="business-display">
+
+            <h3 id="displayBusinessName">
+                FENINI Trading CC
+            </h3>
+
+            <div id="displayBusinessAddress">
+                P.O. Box 703, Outapi, Ombalanu, Namibia
+            </div>
+
+            <div>
+                Phone:
+                <span id="displayBusinessPhone">
+                    +264 81 249 5624
+                </span>
+            </div>
+
+            <div>
+                Registration No:
+                <span id="displayBusinessReg">
+                    CC/2014/013753
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="invoice-title">
+
+            <h2>INVOICE</h2>
+
+            <p>
+                Invoice No:
+                <strong id="displayInvoiceNumber">
+                    INV-001
+                </strong>
+            </p>
+
+            <p>
+                Date:
+                <strong id="displayInvoiceDate">
+                    -
+                </strong>
+            </p>
+
+        </div>
+
+    </div>
+
 
 
     <!-- INVOICE DETAILS -->
@@ -315,6 +487,7 @@ th {
 
         <div class="grid">
 
+
             <div>
 
                 <label>Invoice Number</label>
@@ -323,11 +496,627 @@ th {
                     type="text"
                     id="invoiceNumber"
                     value="INV-001"
+                    oninput="updateInvoiceDisplay()"
                 >
 
             </div>
 
+
             <div>
 
-                <label>Invoi
+                <label>Invoice Date</label>
+
+                <input
+                    type="date"
+                    id="invoiceDate"
+                    onchange="updateInvoiceDisplay()"
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <br>
+
+
+        <div style="max-width: 50%;">
+
+            <label>Due Date</label>
+
+            <input
+                type="date"
+                id="dueDate"
+            >
+
+        </div>
+
+    </div>
+
+
+
+    <!-- CUSTOMER -->
+
+    <div class="section">
+
+        <h2>Bill To</h2>
+
+        <div class="grid">
+
+
+            <div>
+
+                <label>Customer Name</label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Customer name"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>Customer Address</label>
+
+                <textarea
+                    id="customerAddress"
+                    placeholder="Customer address"
+                ></textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ITEMS -->
+
+    <div class="section">
+
+        <h2>Items / Services</h2>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Description</th>
+
+                    <th>Quantity</th>
+
+                    <th>Price (N$)</th>
+
+                    <th>Total (N$)</th>
+
+                    <th class="no-print">Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="items">
+
+            </tbody>
+
+        </table>
+
+
+        <button
+            class="add-btn no-print"
+            onclick="addItem()"
+        >
+            + Add Item
+        </button>
+
+    </div>
+
+
+
+    <!-- TOTALS -->
+
+    <div class="summary">
+
+
+        <div class="summary-row">
+
+            <span>Subtotal</span>
+
+            <strong>
+                N$ <span id="subtotal">0.00</span>
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>VAT (%)</span>
+
+            <input
+                type="number"
+                id="vatRate"
+                value="0"
+                min="0"
+                step="0.01"
+                oninput="calculateTotal()"
+            >
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>VAT</span>
+
+            <strong>
+                N$ <span id="vatAmount">0.00</span>
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row grand-total">
+
+            <span>TOTAL</span>
+
+            <strong>
+                N$ <span id="grandTotal">0.00</span>
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- BUTTONS -->
+
+    <div class="actions no-print">
+
+        <button
+            class="print-btn"
+            onclick="window.print()"
+        >
+            Print / Save PDF
+        </button>
+
+
+        <button
+            class="new-btn"
+            onclick="newInvoice()"
+        >
+            New Invoice
+        </button>
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================
+   DATE
+========================= */
+
+function setToday() {
+
+    const today = new Date();
+
+    const year =
+        today.getFullYear();
+
+    const month =
+        String(today.getMonth() + 1).padStart(2, "0");
+
+    const day =
+        String(today.getDate()).padStart(2, "0");
+
+    document.getElementById("invoiceDate").value =
+        year + "-" + month + "-" + day;
+
+}
+
+
+
+/* =========================
+   BUSINESS INFORMATION
+========================= */
+
+function saveBusinessInfo() {
+
+    const business = {
+
+        name:
+            document.getElementById("businessName").value,
+
+        phone:
+            document.getElementById("businessPhone").value,
+
+        address:
+            document.getElementById("businessAddress").value,
+
+        reg:
+            document.getElementById("businessReg").value
+
+    };
+
+
+    localStorage.setItem(
+        "miccoBusinessInfo",
+        JSON.stringify(business)
+    );
+
+
+    updateBusinessDisplay();
+
+
+    const message =
+        document.getElementById("saveMessage");
+
+
+    message.style.display = "block";
+
+
+    setTimeout(function() {
+
+        message.style.display = "none";
+
+    }, 2500);
+
+}
+
+
+
+/* =========================
+   LOAD BUSINESS INFORMATION
+========================= */
+
+function loadBusinessInfo() {
+
+    const saved =
+        localStorage.getItem("miccoBusinessInfo");
+
+
+    if (!saved) {
+
+        updateBusinessDisplay();
+
+        return;
+
+    }
+
+
+    try {
+
+        const business =
+            JSON.parse(saved);
+
+
+        document.getElementById("businessName").value =
+            business.name || "FENINI Trading CC";
+
+
+        document.getElementById("businessPhone").value =
+            business.phone || "+264 81 249 5624";
+
+
+        document.getElementById("businessAddress").value =
+            business.address ||
+            "P.O. Box 703, Outapi, Ombalanu, Namibia";
+
+
+        document.getElementById("businessReg").value =
+            business.reg || "CC/2014/013753";
+
+
+    }
+
+    catch (error) {
+
+        console.log("Could not load saved business information.");
+
+    }
+
+
+    updateBusinessDisplay();
+
+}
+
+
+
+/* =========================
+   BUSINESS DISPLAY
+========================= */
+
+function updateBusinessDisplay() {
+
+    document.getElementById("displayBusinessName").textContent =
+        document.getElementById("businessName").value;
+
+
+    document.getElementById("displayBusinessAddress").textContent =
+        document.getElementById("businessAddress").value;
+
+
+    document.getElementById("displayBusinessPhone").textContent =
+        document.getElementById("businessPhone").value;
+
+
+    document.getElementById("displayBusinessReg").textContent =
+        document.getElementById("businessReg").value;
+
+}
+
+
+
+/* =========================
+   INVOICE DISPLAY
+========================= */
+
+function updateInvoiceDisplay() {
+
+    document.getElementById("displayInvoiceNumber").textContent =
+        document.getElementById("invoiceNumber").value;
+
+
+    const date =
+        document.getElementById("invoiceDate").value;
+
+
+    if (date) {
+
+        const parts =
+            date.split("-");
+
+        document.getElementById("displayInvoiceDate").textContent =
+            parts[2] + "/" + parts[1] + "/" + parts[0];
+
+    }
+
+}
+
+
+
+/* =========================
+   ADD ITEM
+========================= */
+
+function addItem() {
+
+    const row =
+        document.createElement("tr");
+
+
+    row.innerHTML = `
+
+        <td>
+
+            <input
+                class="item-input"
+                type="text"
+                placeholder="Product or service"
+            >
+
+        </td>
+
+
+        <td>
+
+            <input
+                class="quantity"
+                type="number"
+                value="1"
+                min="1"
+                oninput="calculateTotal()"
+            >
+
+        </td>
+
+
+        <td>
+
+            <input
+                class="price"
+                type="number"
+                value="0"
+                min="0"
+                step="0.01"
+                oninput="calculateTotal()"
+            >
+
+        </td>
+
+
+        <td>
+
+            N$
+            <span class="line-total">
+                0.00
+            </span>
+
+        </td>
+
+
+        <td class="no-print">
+
+            <button
+                class="remove-btn"
+                onclick="
+                    this.closest('tr').remove();
+                    calculateTotal();
+                "
+            >
+                Remove
+            </button>
+
+        </td>
+
+    `;
+
+
+    document
+        .getElementById("items")
+        .appendChild(row);
+
+
+    calculateTotal();
+
+}
+
+
+
+/* =========================
+   CALCULATE TOTAL
+========================= */
+
+function calculateTotal() {
+
+    let subtotal = 0;
+
+
+    const rows =
+        document.querySelectorAll("#items tr");
+
+
+    rows.forEach(function(row) {
+
+
+        const quantity =
+            parseFloat(
+                row.querySelector(".quantity").value
+            ) || 0;
+
+
+        const price =
+            parseFloat(
+                row.querySelector(".price").value
+            ) || 0;
+
+
+        const total =
+            quantity * price;
+
+
+        row.querySelector(".line-total").textContent =
+            total.toFixed(2);
+
+
+        subtotal += total;
+
+    });
+
+
+
+    const vatRate =
+        parseFloat(
+            document.getElementById("vatRate").value
+        ) || 0;
+
+
+    const vat =
+        subtotal * vatRate / 100;
+
+
+    const grandTotal =
+        subtotal + vat;
+
+
+
+    document.getElementById("subtotal").textContent =
+        subtotal.toFixed(2);
+
+
+    document.getElementById("vatAmount").textContent =
+        vat.toFixed(2);
+
+
+    document.getElementById("grandTotal").textContent =
+        grandTotal.toFixed(2);
+
+}
+
+
+
+/* =========================
+   NEW INVOICE
+========================= */
+
+function newInvoice() {
+
+    if (
+        confirm(
+            "Start a new invoice? Your saved business information will remain."
+        )
+    ) {
+
+        document.getElementById("invoiceNumber").value =
+            "INV-001";
+
+        document.getElementById("customerName").value =
+            "";
+
+        document.getElementById("customerAddress").value =
+            "";
+
+        document.getElementById("dueDate").value =
+            "";
+
+        document.getElementById("vatRate").value =
+            "0";
+
+
+        document.getElementById("items").innerHTML =
+            "";
+
+
+        addItem();
+
+
+        setToday();
+
+
+        updateInvoiceDisplay();
+
+
+        calculateTotal();
+
+    }
+
+}
+
+
+
+/* =========================
+   START APPLICATION
+========================= */
+
+loadBusinessInfo();
+
+setToday();
+
+updateInvoiceDisplay();
+
+addItem();
+
+calculateTotal();
+
+</script>
+
+</body>
+</html>
 ```
