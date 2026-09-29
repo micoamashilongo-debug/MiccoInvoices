@@ -1,9 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MiccoInvoices</title>
+<title>MiccoInvoices - FENINI Tradic CC</title>
 
 <style>
 * {
@@ -76,6 +77,27 @@ textarea {
     min-height: 80px;
 }
 
+button {
+    border: none;
+    padding: 11px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.save-business {
+    background: #111827;
+    color: white;
+    margin-top: 15px;
+}
+
+.success-message {
+    color: #15803d;
+    font-weight: bold;
+    margin-top: 10px;
+    display: none;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -94,14 +116,6 @@ th {
 
 .item-input {
     width: 100%;
-}
-
-button {
-    border: none;
-    padding: 11px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
 }
 
 .add-btn {
@@ -124,6 +138,7 @@ button {
 .summary div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 8px;
 }
 
@@ -188,6 +203,15 @@ button {
     .no-print {
         display: none !important;
     }
+
+    input, textarea {
+        border: none;
+        padding: 0;
+    }
+
+    .section h2 {
+        border-bottom: 1px solid #222;
+    }
 }
 </style>
 </head>
@@ -201,19 +225,32 @@ button {
 
 <div class="container">
 
+    <!-- BUSINESS INFORMATION -->
+
     <div class="section">
+
         <h2>Your Business</h2>
 
         <div class="grid">
 
             <div>
                 <label>Business Name</label>
-                <input type="text" id="businessName" placeholder="Your business name">
+                <input
+                    type="text"
+                    id="businessName"
+                    value="FENINI Tradic CC"
+                    placeholder="Your business name"
+                >
             </div>
 
             <div>
-                <label>Phone / Email</label>
-                <input type="text" id="businessContact" placeholder="Phone or email">
+                <label>Phone</label>
+                <input
+                    type="text"
+                    id="businessPhone"
+                    value="+264 81 249 5624"
+                    placeholder="Business phone"
+                >
             </div>
 
         </div>
@@ -221,10 +258,41 @@ button {
         <br>
 
         <label>Business Address</label>
-        <textarea id="businessAddress" placeholder="Business address"></textarea>
+
+        <textarea
+            id="businessAddress"
+            placeholder="Business address"
+        >P.O. Box 703, Outapi, Ombalanu, Namibia</textarea>
+
+        <br>
+
+        <label>Registration Number</label>
+
+        <input
+            type="text"
+            id="businessReg"
+            value="CC/2014/013753"
+            placeholder="Registration number"
+        >
+
+        <button
+            class="save-business no-print"
+            onclick="saveBusinessInfo()"
+        >
+            Save Business Information
+        </button>
+
+        <div
+            id="saveMessage"
+            class="success-message no-print"
+        >
+            Business information saved.
+        </div>
 
     </div>
 
+
+    <!-- INVOICE DETAILS -->
 
     <div class="section">
 
@@ -234,12 +302,19 @@ button {
 
             <div>
                 <label>Invoice Number</label>
-                <input type="text" id="invoiceNumber" value="INV-001">
+                <input
+                    type="text"
+                    id="invoiceNumber"
+                    value="INV-001"
+                >
             </div>
 
             <div>
                 <label>Invoice Date</label>
-                <input type="date" id="invoiceDate">
+                <input
+                    type="date"
+                    id="invoiceDate"
+                >
             </div>
 
         </div>
@@ -247,25 +322,42 @@ button {
         <br>
 
         <label>Due Date</label>
-        <input type="date" id="dueDate">
+
+        <input
+            type="date"
+            id="dueDate"
+        >
 
     </div>
 
+
+    <!-- CUSTOMER -->
 
     <div class="section">
 
         <h2>Customer</h2>
 
         <label>Customer Name</label>
-        <input type="text" id="customerName" placeholder="Customer name">
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Customer name"
+        >
 
         <br><br>
 
         <label>Customer Address</label>
-        <textarea id="customerAddress" placeholder="Customer address"></textarea>
+
+        <textarea
+            id="customerAddress"
+            placeholder="Customer address"
+        ></textarea>
 
     </div>
 
+
+    <!-- ITEMS -->
 
     <div class="section">
 
@@ -274,6 +366,7 @@ button {
         <table>
 
             <thead>
+
                 <tr>
                     <th>Description</th>
                     <th>Quantity</th>
@@ -281,28 +374,37 @@ button {
                     <th>Total (N$)</th>
                     <th class="no-print">Action</th>
                 </tr>
+
             </thead>
 
             <tbody id="items"></tbody>
 
         </table>
 
-        <button class="add-btn no-print" onclick="addItem()">
+        <button
+            class="add-btn no-print"
+            onclick="addItem()"
+        >
             + Add Item
         </button>
 
     </div>
 
 
+    <!-- TOTALS -->
+
     <div class="summary">
 
         <div>
             <span>Subtotal</span>
-            <span>N$ <span id="subtotal">0.00</span></span>
+            <span>
+                N$ <span id="subtotal">0.00</span>
+            </span>
         </div>
 
         <div>
             <span>VAT (%)</span>
+
             <input
                 type="number"
                 id="vatRate"
@@ -315,24 +417,40 @@ button {
 
         <div>
             <span>VAT</span>
-            <span>N$ <span id="vatAmount">0.00</span></span>
+
+            <span>
+                N$ <span id="vatAmount">0.00</span>
+            </span>
         </div>
 
         <div class="grand-total">
+
             <span>Total</span>
-            <span>N$ <span id="grandTotal">0.00</span></span>
+
+            <span>
+                N$ <span id="grandTotal">0.00</span>
+            </span>
+
         </div>
 
     </div>
 
 
+    <!-- ACTIONS -->
+
     <div class="actions no-print">
 
-        <button class="print-btn" onclick="window.print()">
+        <button
+            class="print-btn"
+            onclick="window.print()"
+        >
             Print / Save PDF
         </button>
 
-        <button class="clear-btn" onclick="clearInvoice()">
+        <button
+            class="clear-btn"
+            onclick="clearInvoice()"
+        >
             New Invoice
         </button>
 
@@ -343,121 +461,51 @@ button {
 
 <script>
 
+/* Set today's date */
+
 document.getElementById("invoiceDate").valueAsDate = new Date();
 
-function addItem() {
 
-    const row = document.createElement("tr");
+/* Load saved business information */
 
-    row.innerHTML = `
+function loadBusinessInfo() {
 
-        <td>
-            <input
-                class="item-input"
-                type="text"
-                placeholder="Product or service"
-            >
-        </td>
+    const savedBusiness =
+        localStorage.getItem("miccoBusinessInfo");
 
-        <td>
-            <input
-                class="quantity"
-                type="number"
-                value="1"
-                min="1"
-                oninput="calculateTotal()"
-            >
-        </td>
-
-        <td>
-            <input
-                class="price"
-                type="number"
-                value="0"
-                min="0"
-                step="0.01"
-                oninput="calculateTotal()"
-            >
-        </td>
-
-        <td>
-            N$ <span class="line-total">0.00</span>
-        </td>
-
-        <td class="no-print">
-            <button
-                class="remove-btn"
-                onclick="this.closest('tr').remove(); calculateTotal();"
-            >
-                Remove
-            </button>
-        </td>
-
-    `;
-
-    document.getElementById("items").appendChild(row);
-
-    calculateTotal();
-}
-
-
-function calculateTotal() {
-
-    let subtotal = 0;
-
-    const rows = document.querySelectorAll("#items tr");
-
-    rows.forEach(row => {
-
-        const quantity =
-            parseFloat(row.querySelector(".quantity").value) || 0;
-
-        const price =
-            parseFloat(row.querySelector(".price").value) || 0;
-
-        const total = quantity * price;
-
-        row.querySelector(".line-total").textContent =
-            total.toFixed(2);
-
-        subtotal += total;
-
-    });
-
-
-    const vatRate =
-        parseFloat(document.getElementById("vatRate").value) || 0;
-
-    const vat =
-        subtotal * vatRate / 100;
-
-    const grandTotal =
-        subtotal + vat;
-
-
-    document.getElementById("subtotal").textContent =
-        subtotal.toFixed(2);
-
-    document.getElementById("vatAmount").textContent =
-        vat.toFixed(2);
-
-    document.getElementById("grandTotal").textContent =
-        grandTotal.toFixed(2);
-}
-
-
-function clearInvoice() {
-
-    if (confirm("Start a new invoice?")) {
-        location.reload();
+    if (!savedBusiness) {
+        return;
     }
 
+    const business =
+        JSON.parse(savedBusiness);
+
+    document.getElementById("businessName").value =
+        business.name || "";
+
+    document.getElementById("businessPhone").value =
+        business.phone || "";
+
+    document.getElementById("businessAddress").value =
+        business.address || "";
+
+    document.getElementById("businessReg").value =
+        business.reg || "";
 }
 
 
-addItem();
+/* Save business information */
 
-</script>
+function saveBusinessInfo() {
 
-</body>
-</html>
+    const business = {
+
+        name:
+            document.getElementById("businessName").value,
+
+        phone:
+            document.getElementById("businessPhone").value,
+
+        address:
+            document.getElementById(
+```
